@@ -104,7 +104,6 @@ $this->load->view('member/index', $data);
 $this->load->view('templates/templates-user/modal');
 $this->load->view('templates/templates-user/footer', $data);
 }
-}
 public function ubahProfil()
 {
     $data['judul'] = 'Profil Saya';
@@ -162,3 +161,13 @@ public function ubahProfil()
         redirect('member/myprofil');
     }
 }
+public function logout()
+{
+$this->session->unset_userdata('email');
+$this->session->unset_userdata('role_id');
+$this->session->set_flashdata('pesan', '<div class="alert alert-
+success alert-message" role="alert">Anda telah logout!!</div>');
+redirect('home');
+}
+}
+
