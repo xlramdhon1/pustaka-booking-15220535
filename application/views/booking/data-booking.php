@@ -1,49 +1,60 @@
 <div class="container">
     <center>
-        <div class="table-responsive full-width">
-            <table class="table table-bordered table-striped table-hover" id="table-datatable">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Buku</th>
-                        <th>Penulis</th>
-                        <th>Penerbit</th>
-                        <th>Tahun</th>
-                        <th>Pilihan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $no = 1; ?>
-                    <?php foreach ($temp as $t): ?>
-                    <tr>
-                        <td><?= $no; ?></td>
-                        <td>
-                            <img src="<?= base_url('assets/img/upload/' . $t['image']); ?>" class="rounded" alt="No Picture" width="10%">
-                        </td>
-                        <td nowrap><?= $t['penulis']; ?></td>
-                        <td nowrap><?= $t['penerbit']; ?></td>
-                        <td nowrap><?= substr($t['tahun_terbit'], 0, 4); ?></td>
-                        <td nowrap>
-                            <a href="<?= base_url('booking/hapusbooking/' . $t['id_buku']); ?>" onclick="return_konfirm('Yakin tidak Jadi Booking <?= $t['judul_buku']; ?>')">
-                                <i class="btn btn-sm btn-outline-danger fas fw fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php $no++; ?>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        
-        <hr>
-
-        <div class="btn-group">
-            <a class="btn btn-sm btn-outline-primary" href="<?php echo base_url(); ?>">
-                <span class="fas fw fa-play"></span> Lanjutkan Booking Buku
-            </a>
-            <a class="btn btn-sm btn-outline-success" href="<?php echo base_url('booking/bookingSelesai/' . $this->session->userdata('id_user')); ?>">
-                <span class="fas fw fa-stop"></span> Selesaikan Booking
-            </a>
-        </div>
+        <table>
+            <tr>
+                <td>
+                    <div class="table-responsive full-width">
+                        <table class="table table-bordered table-striped table-hover" id="table-datatable">
+                            <tr>
+                                <th>No.</th>
+                                <th>ID Booking</th>
+                                <th>Tanggal Booking</th>
+                                <th>ID User</th>
+                                <th>Aksi</th>
+                                <th>Denda / Buku / Hari</th>
+                                <th>Lama Pinjam</th>
+                            </tr>
+                            <?php
+                            $no = 1;
+                            foreach ($pinjam as $p) : ?>
+                            <tr>
+                                <td><?= $no; ?></td>
+                                <td>
+                                    <a class="btn btn-link" href="<?= base_url('pinjam/bookingDetail/' . $p['id_booking']); ?>">
+                                        <?= $p['id_booking']; ?>
+                                    </a>
+                                </td>
+                                <td><?= $p['tgl_booking']; ?></td>
+                                <td><?= $p['id_user']; ?></td>
+                                <form action="<?= base_url('pinjam/pinjamAct/' . $p['id_booking']); ?>" method="post">
+                                    <td nowrap>
+                                        <button type="submit" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-fw fa-cart-plus"></i> Pinjam
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <input class="form-check-user rounded-sm" style="width:100px" type="text" name="denda" id="denda" value="5000">
+                                        <?= form_error('denda'); ?>
+                                    </td>
+                                    <td>
+                                        <input class="form-check-user rounded-sm" style="width:100px" type="text" name="lama" id="lama" value="3">
+                                        <?= form_error('lama'); ?>
+                                    </td>
+                                </form>
+                            </tr>
+                            <?php $no++;
+                            endforeach; ?>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <a href="<?= base_url('pinjam/daftarBooking'); ?>" class="btn btn-link">
+                        <i class="fas fa-fw fa-refresh"></i> Refresh
+                    </a>
+                </td>
+            </tr>
+        </table>
     </center>
 </div>
