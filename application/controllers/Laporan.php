@@ -43,5 +43,13 @@ public function laporan_buku_pdf()
     $this->dompdf->stream("laporan_data_buku.pdf", array('Attachment' => 0));
     // nama file pdf yang dihasilkan
 }
+public function export_excel()
+{
+    $data = array(
+        'title' => 'Laporan Buku',
+        'buku' => $this->ModelBuku->getBuku()->result_array()
+    );
+    $this->load->view('buku/export_excel_buku', $data);
+}
 
 }
