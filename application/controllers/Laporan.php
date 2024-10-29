@@ -24,5 +24,24 @@ public function cetak_laporan_buku() {
 
   $this->load->view('buku/laporan_print_buku', $data);
 }
+public function laporan_buku_pdf()
+{
+    $this->load->library('dompdf_gen');
+
+    $data['buku'] = $this->ModelBuku->getBuku()->result_array();
+
+    $this->load->view('buku/laporan_pdf_buku', $data);
+
+    $paper_size = 'A4'; // ukuran kertas
+    $orientation = 'landscape'; // tipe format kertas potrait atau landscape
+    $html = $this->output->get_output();
+
+    $this->dompdf->set_paper($paper_size, $orientation);
+    // Convert to PDF
+    $this->dompdf->load_html($html);
+    $this->dompdf->render();
+    $this->dompdf->stream("laporan_data_buku.pdf", array('Attachment' => 0));
+    // nama file pdf yang dihasilkan
+}
 
 }
