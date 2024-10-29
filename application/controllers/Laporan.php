@@ -18,4 +18,11 @@ $this->load->view('templates/topbar', $data);
 $this->load->view('buku/laporan_buku', $data);
 $this->load->view('templates/footer');
 }
+public function cetak_laporan_buku() {
+  $data['buku'] = $this->ModelBuku->getBuku()->result_array();
+  $data['kategori'] = $this->ModelBuku->getKategori()->result_array();
+
+  $this->load->view('buku/laporan_print_buku', $data);
+}
+
 }
